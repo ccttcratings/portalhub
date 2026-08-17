@@ -4,29 +4,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CCTTC Portal Hub</title>
   <style>
+    /* ----------------------------------------------------
+       THE FIX: Intercept Dark Reader for Blue and Purple Buttons 
+       ---------------------------------------------------- */
+    html[data-darkreader-scheme="dark"] .facebook {
+      background-color: #132646 !important;
+      color: #a8c7fa !important;
+    }
+    html[data-darkreader-scheme="dark"] .graph {
+      background-color: #2d1a4d !important;
+      color: #d7b8f3 !important;
+    }
+
+    /* Core Layout Styles */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-h2 { color: #1e293b; margin-bottom: 0; font-size: 30px; white-space: nowrap; }
-p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
+    h2 { color: #1e293b; margin-bottom: 0; font-size: 30px; white-space: nowrap; }
+    p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
     .section { color: #475569; font-size: 22px; font-weight: bold; letter-spacing: 1px; margin: 24px 0 4px; text-align: left; }
     .btn { display: block; text-decoration: none; padding: 14px; margin: 12px 0; border: 2px solid #000; border-radius: 8px; font-weight: bold; font-size: 16px; transition: transform 0.1s; }
     .btn:active { transform: scale(0.98); }
+    
+    /* Standard Light Mode Declarations */
     .preview { background-color: #c5eec5; color: #1e293b; }
     .edit { background-color: #ffa5a5; color: #1e293b; }
     .site { background-color: #f9cb9c; color: #1e293b; }
     .facebook { background-color: #c9daf8; color: #1e293b; }
     .graph { background-color: #d9d2e9; color: #1e293b; }
+    
     .tinyurl { display: block; text-decoration: none; padding: 12px; margin: 12px 0; border: 2px solid #000; border-radius: 8px; font-weight: bold; font-size: 14px; background-color: #f9cb9c; color: #1e293b; transition: transform 0.1s; word-break: keep-all; white-space: nowrap; }
     .tinyurl.small { font-size: 12px; }
     .tinyurl:active { transform: scale(0.98); }
-    @media (prefers-color-scheme: dark) {
-      .facebook { background-color: #1c355e !important; color: #a8c7fa !important; }
-      .graph { background-color: #3c245c !important; color: #d7b8f3 !important; }
-    }
-    @media (prefers-color-scheme: light) {
-      .facebook { background-color: #c9daf8 !important; color: #1e293b !important; }
-      .graph { background-color: #d9d2e9 !important; color: #1e293b !important; }
-    }
   </style>
 </head>
 <body>
