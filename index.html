@@ -5,15 +5,12 @@
   <title>CCTTC Portal Hub</title>
   <style>
     /* ----------------------------------------------------
-       THE FIX: Universal dark-mode coverage
-       prefers-color-scheme handles native system dark mode on
-       any browser/device; the Dark Reader attribute rule is kept
-       as a fallback so the desktop Dark Reader look is identical.
+       THE FIX: Intercept Dark Reader for Blue and Purple Buttons 
+       NOTE: not using prefers-color-scheme — it follows the OS
+       theme (which can be dark while nothing darkens the page),
+       while this attribute only appears when Dark Reader is
+       actually rendering the page dark.
        ---------------------------------------------------- */
-    @media (prefers-color-scheme: dark) {
-      .facebook { background-color: #132646 !important; color: #a8c7fa !important; }
-      .graph { background-color: #2d1a4d !important; color: #d7b8f3 !important; }
-    }
     html[data-darkreader-scheme="dark"] .facebook {
       background-color: #132646 !important;
       color: #a8c7fa !important;
