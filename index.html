@@ -83,7 +83,7 @@
   </style>
 </head>
 <body>
-  <script>if (new Date().getDate() % 2) document.documentElement.classList.add('neon');</script>
+  <script>const p=new URLSearchParams(location.search);if(p.has('neon')||(!p.has('normal')&&new Date().getDate()%2))document.documentElement.classList.add('neon');</script>
   <div class="card">
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
