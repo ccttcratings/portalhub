@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neon Colors</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fce5cd;font-family:sans-serif;padding:30px 20px;color:#000}
+h1{text-align:center;margin-bottom:8px;font-size:22px}
+.sub{text-align:center;margin-bottom:30px;font-size:12px;color:#888}
+.row{max-width:440px;margin:0 auto 30px}
+.label{font-size:11px;color:#666;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
+.btn {
+  position: relative; display: block; text-decoration: none;
+  padding: 14px; margin: 20px 0; border-radius: 12px;
+  font-weight: bold; font-size: 16px; color: #000; text-align:center;
+  transform: perspective(500px) rotateY(-12deg);
+  box-shadow: 2px 0 0 4px rgba(0,0,0,.2), 0 6px 0 var(--dark), 0 10px 16px rgba(0,0,0,.35);
+  overflow: hidden; border: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.btn::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,.7) 0%, rgba(255,255,255,.15) 100%);
+  border-radius: 8px 8px 50% 50%; pointer-events: none;
+}
+.btn::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.3), transparent);
+  transition: 0.5s; z-index: 1; pointer-events: none;
+}
+.btn:hover::before { left: 100%; }
+.btn:hover { transform: perspective(500px) rotateY(0deg); box-shadow: 0 0 0 4px rgba(0,0,0,.1), 0 2px 0 var(--dark), 0 4px 10px rgba(0,0,0,.25); }
+.btn:active { transform: perspective(500px) rotateY(0deg) translateY(2px); box-shadow: 0 0 0 4px rgba(0,0,0,.1), 0 0 0 var(--dark), 0 2px 6px rgba(0,0,0,.2); }
+
+/* NEON GREEN — #00FF00 */
+.ng1 { background: linear-gradient(180deg, #00ff00 0%, #00cc00 40%, #009900 100%); --dark: #006600; }
+.ng2 { background: linear-gradient(180deg, #33ff33 0%, #00dd00 40%, #00aa00 100%); --dark: #007700; }
+.ng3 { background: linear-gradient(180deg, #66ff66 0%, #33dd33 40%, #00bb00 100%); --dark: #008800; }
+
+/* NEON RED — #FF0000 */
+.nr1 { background: linear-gradient(180deg, #ff0000 0%, #cc0000 40%, #990000 100%); --dark: #660000; }
+.nr2 { background: linear-gradient(180deg, #ff3333 0%, #dd1111 40%, #aa0000 100%); --dark: #770000; }
+.nr3 { background: linear-gradient(180deg, #ff4444 0%, #cc2222 40%, #991111 100%); --dark: #661111; }
+
+/* NEON CYAN / BLUE — #00FFFF */
+.nb1 { background: linear-gradient(180deg, #00ffff 0%, #00cccc 40%, #009999 100%); --dark: #006666; }
+.nb2 { background: linear-gradient(180deg, #33ffff 0%, #00dddd 40%, #00aaaa 100%); --dark: #007777; }
+.nb3 { background: linear-gradient(180deg, #66ffff 0%, #33dddd 40%, #00bbbb 100%); --dark: #008888; }
+
+/* NEON ORANGE — #FF5E00 */
+.no1 { background: linear-gradient(180deg, #ff5e00 0%, #dd4a00 40%, #bb3800 100%); --dark: #882800; }
+.no2 { background: linear-gradient(180deg, #ff7722 0%, #dd5511 40%, #bb4408 100%); --dark: #883304; }
+.no3 { background: linear-gradient(180deg, #ff8833 0%, #dd6622 40%, #bb5515 100%); --dark: #88440c; }
+.no4 { background: linear-gradient(180deg, #ffaa00 0%, #dd8800 40%, #bb6600 100%); --dark: #884400; }
+.no5 { background: linear-gradient(180deg, #ff5c00 0%, #dd4400 40%, #bb3300 100%); --dark: #882200; }
+.no6 { background: linear-gradient(180deg, #ff3300 0%, #dd2200 40%, #bb1100 100%); --dark: #881100; }
+
+/* NEON PURPLE / MAGENTA — #BF00FF or #FF00CC */
+.npu1 { background: linear-gradient(180deg, #bf00ff 0%, #9900dd 40%, #7700bb 100%); --dark: #550099; }
+.npu2 { background: linear-gradient(180deg, #d033ff 0%, #aa11dd 40%, #8800bb 100%); --dark: #660099; }
+.npu3 { background: linear-gradient(180deg, #ff00cc 0%, #dd00aa 40%, #bb0088 100%); --dark: #880066; }
+.npu4 { background: linear-gradient(180deg, #ff33dd 0%, #dd11bb 40%, #bb0099 100%); --dark: #880077; }
+.npu5 { background: linear-gradient(180deg, #ff55ee 0%, #dd33cc 40%, #bb22aa 100%); --dark: #881188; }
+.npu6 { background: linear-gradient(180deg, #dd44ee 0%, #bb22cc 40%, #9911aa 100%); --dark: #770088; }
+
+/* NEON YELLOW / LIME — #FFFF00 or #CCFF00 */
+.ny1 { background: linear-gradient(180deg, #ffff00 0%, #ddcc00 40%, #bb9900 100%); --dark: #887700; }
+.ny2 { background: linear-gradient(180deg, #ccff00 0%, #aadd00 40%, #88bb00 100%); --dark: #668800; }
+.ny3 { background: linear-gradient(180deg, #eeff33 0%, #ccdd11 40%, #aabb08 100%); --dark: #889904; }
+.ny4 { background: linear-gradient(180deg, #ddff22 0%, #bbee11 40%, #99cc08 100%); --dark: #779904; }
+
+/* NEON PINK — #FF6EC7 or #FF1493 */
+.npk1 { background: linear-gradient(180deg, #ff6ec7 0%, #dd4aaa 40%, #bb3888 100%); --dark: #882866; }
+.npk2 { background: linear-gradient(180deg, #ff88d5 0%, #dd66bb 40%, #bb5599 100%); --dark: #884477; }
+.npk3 { background: linear-gradient(180deg, #ff1493 0%, #dd1077 40%, #bb0866 100%); --dark: #880044; }
+.npk4 { background: linear-gradient(180deg, #ff33aa 0%, #dd1188 40%, #bb0077 100%); --dark: #880055; }
+
+/* ELECTRIC TEAL — #00F5FF or #00E5EE */
+.nt1 { background: linear-gradient(180deg, #00f5ff 0%, #00ccdd 40%, #00aabb 100%); --dark: #008899; }
+.nt2 { background: linear-gradient(180deg, #33f7ff 0%, #00ddEE 40%, #00bbcc 100%); --dark: #009999; }
+.nt3 { background: linear-gradient(180deg, #00e5ee 0%, #00bbcc 40%, #009999 100%); --dark: #007777; }
+.nt4 { background: linear-gradient(180deg, #22eeff 0%, #00ccdd 40%, #00aabb 100%); --dark: #008899; }
+.nt5 { background: linear-gradient(180deg, #1199cc 0%, #0e7faa 40%, #0b6688 100%); --dark: #094d66; }
+.nt6 { background: linear-gradient(180deg, #0e88bb 0%, #0c6e99 40%, #0a5577 100%); --dark: #084455; }
+.nt7 { background: linear-gradient(180deg, #0b7099 0%, #095a77 40%, #074455 100%); --dark: #053344; }
+.nt8 { background: linear-gradient(180deg, #095a77 0%, #074455 40%, #053344 100%); --dark: #042233; }
+
+/* PORTALHUB CURRENT COLORS */
+.ph-preview { background: linear-gradient(180deg, #6abf6e 0%, #3a9e3e 40%, #288028 100%); --dark: #1c6a1c; }
+.ph-edit { background: linear-gradient(180deg, #e87070 0%, #c84040 40%, #a02020 100%); --dark: #801818; }
+.ph-site { background: linear-gradient(180deg, #f0a030 0%, #d08020 40%, #b06818 100%); --dark: #905010; }
+.ph-facebook { background: linear-gradient(180deg, #3ba8d6 0%, #1a7daa 40%, #0e5f80 100%); --dark: #0a4a60; }
+.ph-graphnew { background: linear-gradient(180deg, #e060a0 0%, #b03070 40%, #902060 100%); --dark: #701850; }
+.ph-graph { background: linear-gradient(180deg, #a048a0 0%, #883088 40%, #682068 100%); --dark: #501850; }
+
+/* OG — original portalhub reflection contrast */
+.og::after {
+  background: linear-gradient(180deg, rgba(255,255,255,.4) 0%, rgba(255,255,255,.05) 100%) !important;
+}
+</style>
+</head>
+<body>
+<h1>Neon Color Options</h1>
+<p class="sub">Standard neon palette — hover to preview</p>
+
+<div class="row">
+  <div class="label">Green / Yellow</div>
+  <a class="btn ny3">C <span style="font-size:11px;font-weight:normal;opacity:.7">#eeff33</span></a>
+  <a class="btn ny4">D <span style="font-size:11px;font-weight:normal;opacity:.7">#ddff22</span></a>
+  <a class="btn ny2">B <span style="font-size:11px;font-weight:normal;opacity:.7">#ccff00</span></a>
+  <a class="btn ny1">A <span style="font-size:11px;font-weight:normal;opacity:.7">#ffff00</span></a>
+  <a class="btn ng3">Preview C <span style="font-size:11px;font-weight:normal;opacity:.7">#66ff66</span></a>
+  <a class="btn ng2">Preview B <span style="font-size:11px;font-weight:normal;opacity:.7">#33ff33</span></a>
+  <a class="btn ng1">Preview A <span style="font-size:11px;font-weight:normal;opacity:.7">#00ff00</span></a>
+  <a class="btn ph-preview">Preview Mode <span style="font-size:11px;font-weight:normal;opacity:.7">current</span></a>
+  <a class="btn ph-preview og">Preview Mode <span style="font-size:11px;font-weight:normal;opacity:.7">current OG</span></a>
+</div>
+
+<div class="row">
+  <div class="label">Red / Orange</div>
+  <a class="btn no4">Site D <span style="font-size:11px;font-weight:normal;opacity:.7">#ffaa00</span></a>
+  <a class="btn no3">Site C <span style="font-size:11px;font-weight:normal;opacity:.7">#ff8833</span></a>
+  <a class="btn no2">Site B <span style="font-size:11px;font-weight:normal;opacity:.7">#ff7722</span></a>
+  <a class="btn no1">Site A <span style="font-size:11px;font-weight:normal;opacity:.7">#ff5e00</span></a>
+  <a class="btn no5">Vibrant Neon <span style="font-size:11px;font-weight:normal;opacity:.7">#ff5c00</span></a>
+  <a class="btn no6">Bright Fluorescent <span style="font-size:11px;font-weight:normal;opacity:.7">#ff3300</span></a>
+  <a class="btn ph-site">champaigntabletennis.com <span style="font-size:11px;font-weight:normal;opacity:.7">current</span></a>
+  <a class="btn ph-site og">champaigntabletennis.com <span style="font-size:11px;font-weight:normal;opacity:.7">current OG</span></a>
+  <a class="btn nr3">Edit C <span style="font-size:11px;font-weight:normal;opacity:.7">#ff4444</span></a>
+  <a class="btn nr2">Edit B <span style="font-size:11px;font-weight:normal;opacity:.7">#ff3333</span></a>
+  <a class="btn nr1">Edit A <span style="font-size:11px;font-weight:normal;opacity:.7">#ff0000</span></a>
+  <a class="btn ph-edit">Edit Mode <span style="font-size:11px;font-weight:normal;opacity:.7">current</span></a>
+  <a class="btn ph-edit og">Edit Mode <span style="font-size:11px;font-weight:normal;opacity:.7">current OG</span></a>
+</div>
+
+<div class="row">
+  <div class="label">Cyan / Blue / Teal</div>
+  <a class="btn nb3">Facebook C <span style="font-size:11px;font-weight:normal;opacity:.7">#66ffff</span></a>
+  <a class="btn nb2">Facebook B <span style="font-size:11px;font-weight:normal;opacity:.7">#33ffff</span></a>
+  <a class="btn nt2">Teal B <span style="font-size:11px;font-weight:normal;opacity:.7">#33f7ff</span></a>
+  <a class="btn nt4">Teal D <span style="font-size:11px;font-weight:normal;opacity:.7">#22eeff</span></a>
+  <a class="btn nb1">Facebook A <span style="font-size:11px;font-weight:normal;opacity:.7">#00ffff</span></a>
+  <a class="btn nt1">Teal A <span style="font-size:11px;font-weight:normal;opacity:.7">#00f5ff</span></a>
+  <a class="btn nt3">Teal C <span style="font-size:11px;font-weight:normal;opacity:.7">#00e5ee</span></a>
+  <a class="btn nt5">Teal E <span style="font-size:11px;font-weight:normal;opacity:.7">#1199cc</span></a>
+  <a class="btn nt6">Teal F <span style="font-size:11px;font-weight:normal;opacity:.7">#0e88bb</span></a>
+  <a class="btn nt7">Teal G <span style="font-size:11px;font-weight:normal;opacity:.7">#0b7099</span></a>
+  <a class="btn nt8">Teal H <span style="font-size:11px;font-weight:normal;opacity:.7">#095a77</span></a>
+  <a class="btn ph-facebook">Facebook Page <span style="font-size:11px;font-weight:normal;opacity:.7">current</span></a>
+  <a class="btn ph-facebook og">Facebook Page <span style="font-size:11px;font-weight:normal;opacity:.7">current OG</span></a>
+</div>
+
+<div class="row">
+  <div class="label">Purple / Pink</div>
+  <a class="btn npk2">Pink B <span style="font-size:11px;font-weight:normal;opacity:.7">#ff88d5</span></a>
+  <a class="btn npk1">Pink A <span style="font-size:11px;font-weight:normal;opacity:.7">#ff6ec7</span></a>
+  <a class="btn npu5">Graph Pink C <span style="font-size:11px;font-weight:normal;opacity:.7">#ff55ee</span></a>
+  <a class="btn npu4">Graph Pink B <span style="font-size:11px;font-weight:normal;opacity:.7">#ff33dd</span></a>
+  <a class="btn npk4">Pink D <span style="font-size:11px;font-weight:normal;opacity:.7">#ff33aa</span></a>
+  <a class="btn npu3">Graph Pink A <span style="font-size:11px;font-weight:normal;opacity:.7">#ff00cc</span></a>
+  <a class="btn npk3">Pink C <span style="font-size:11px;font-weight:normal;opacity:.7">#ff1493</span></a>
+  <a class="btn ph-graphnew">Player Ratings Graph <span style="font-size:11px;font-weight:normal;opacity:.7">current pink</span></a>
+  <a class="btn ph-graphnew og">Player Ratings Graph <span style="font-size:11px;font-weight:normal;opacity:.7">current pink OG</span></a>
+  <a class="btn npu6">Graph Pink D <span style="font-size:11px;font-weight:normal;opacity:.7">#dd44ee</span></a>
+  <a class="btn npu2">Old Graph B <span style="font-size:11px;font-weight:normal;opacity:.7">#d033ff</span></a>
+  <a class="btn npu1">Old Graph A <span style="font-size:11px;font-weight:normal;opacity:.7">#bf00ff</span></a>
+  <a class="btn ph-graph">Old Player Ratings Graph <span style="font-size:11px;font-weight:normal;opacity:.7">current purple</span></a>
+  <a class="btn ph-graph og">Old Player Ratings Graph <span style="font-size:11px;font-weight:normal;opacity:.7">current purple OG</span></a>
+</div>
+
+</body>
+</html>
