@@ -131,5 +131,67 @@
     <a href="https://ccttcratings.github.io/portal2/?neon" class="btn graph">League Results</a>
     <a href="https://ccttcratings.github.io/portalhub/?neon" class="btn facebook">Portal Hub of Portals</a>
   </div>
+  <script>
+    (function() {
+      var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
+      var friction = 0.997;
+      var bounceDecay = 0.6;
+
+      document.addEventListener('touchstart', function(e) {
+        if (e.touches.length !== 1) return;
+        drag.active = true;
+        drag.startY = e.touches[0].clientY;
+        drag.startScroll = window.scrollY;
+        drag.history = [{ y: e.touches[0].clientY, t: Date.now() }];
+        drag.animating = false;
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (!drag.active || e.touches.length !== 1) return;
+        var dy = drag.startY - e.touches[0].clientY;
+        window.scrollTo(0, drag.startScroll + dy);
+        var now = Date.now();
+        drag.history.push({ y: e.touches[0].clientY, t: now });
+        if (drag.history.length > 8) drag.history.shift();
+      }, { passive: true });
+
+      document.addEventListener('touchend', function() {
+        if (!drag.active) return;
+        drag.active = false;
+        var h = drag.history;
+        if (h.length < 2) return;
+        var last = h[h.length - 1], first = h[0];
+        var dt = last.t - first.t;
+        if (dt <= 0) return;
+        var velocity = (first.y - last.y) / dt;
+        if (Math.abs(velocity) < 0.3) return;
+        startScrollMomentum(velocity);
+      }, { passive: true });
+
+      function startScrollMomentum(v) {
+        drag.animating = true;
+        var lastTime = Date.now();
+        var vy = v;
+        function step() {
+          if (!drag.animating) return;
+          var now = Date.now();
+          var elapsed = now - lastTime;
+          lastTime = now;
+          vy *= Math.pow(friction, elapsed / 16);
+          if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
+          var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          var prevScroll = window.scrollY;
+          window.scrollBy(0, vy * elapsed);
+          var atTop = window.scrollY <= 0;
+          var atBottom = window.scrollY >= maxScroll;
+          if ((atTop && vy < 0) || (atBottom && vy > 0)) {
+            vy = -vy * bounceDecay;
+          }
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+    })();
+  </script>
 </body>
 </html>
