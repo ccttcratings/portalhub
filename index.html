@@ -172,6 +172,7 @@
         drag.animating = true;
         var lastTime = Date.now();
         var vy = v;
+        var wasAtWall = false;
         function step() {
           if (!drag.animating) return;
           var now = Date.now();
@@ -180,12 +181,15 @@
           vy *= Math.pow(friction, elapsed / 16);
           if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          var prevScroll = window.scrollY;
           window.scrollBy(0, vy * elapsed);
           var atTop = window.scrollY <= 0;
           var atBottom = window.scrollY >= maxScroll;
-          if ((atTop && vy < 0) || (atBottom && vy > 0)) {
+          var atWall = atTop || atBottom;
+          if (atWall && !wasAtWall) {
             vy = -vy * bounceDecay;
+            wasAtWall = true;
+          } else if (!atWall) {
+            wasAtWall = false;
           }
           requestAnimationFrame(step);
         }
