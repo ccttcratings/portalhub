@@ -134,8 +134,8 @@
   <script>
     (function() {
       var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
-      var friction = 0.997;
-      var bounceDecay = 0.85;
+      var friction = 0.99;
+      var bounceDecay = 0.7;
 
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length !== 1) return;
