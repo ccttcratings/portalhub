@@ -18,9 +18,9 @@
     /* Core Layout Styles */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    h2 { color: #1e293b; margin-bottom: 0; font-size: 26px; white-space: nowrap; }
+    h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
-    .section { color: #475569; font-size: 22px; font-weight: bold; letter-spacing: 1px; margin: 24px 0 4px; text-align: left; padding-left: 16px; }
+    .section { color: #475569; font-size: 22px; font-weight: bold; letter-spacing: 1px; margin: 24px 0 4px; text-align: left; padding-left: 12px; }
     /* Glass Button Base - glossy gel + perspective angle */
     .btn {
       position: relative; display: block; text-decoration: none;
@@ -135,7 +135,7 @@
     (function() {
       var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
       var friction = 0.99;
-      var bounceDecay = 0.01;
+      var bounceDecay = 0.99;
 
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length !== 1) return;
