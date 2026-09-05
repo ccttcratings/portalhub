@@ -181,18 +181,18 @@
           vy *= Math.pow(friction, elapsed / 16);
           if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          var prevScroll = window.scrollY;
-          window.scrollBy(0, vy * elapsed);
-          var newScroll = window.scrollY;
-          var atTop = newScroll <= 0;
-          var atBottom = newScroll >= maxScroll;
-          var atWall = atTop || atBottom;
+          var scroll = window.scrollY;
+          var nextScroll = scroll + vy * elapsed;
+          if (nextScroll < 0) nextScroll = 0;
+          if (nextScroll > maxScroll) nextScroll = maxScroll;
+          var atWall = (nextScroll <= 0 || nextScroll >= maxScroll);
           if (atWall && !wasAtWall) {
             vy = -vy * bounceDecay;
             wasAtWall = true;
-          } else if (!atWall || newScroll !== prevScroll) {
+          } else if (!atWall) {
             wasAtWall = false;
           }
+          window.scrollTo(0, nextScroll);
           requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
