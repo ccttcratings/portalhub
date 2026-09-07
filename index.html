@@ -188,8 +188,8 @@
           }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           pos += vy * elapsed;
-          if (pos < 0) { pos = 0; drag.animating = false; return; }
-          if (pos > maxScroll) { pos = maxScroll; drag.animating = false; return; }
+          if (pos < 0) { pos = 0; if (vy < 0) vy = -vy * bounceDecay; }
+          if (pos > maxScroll) { pos = maxScroll; if (vy > 0) vy = -vy * bounceDecay; }
           window.scrollTo(0, pos);
           requestAnimationFrame(step);
         }
