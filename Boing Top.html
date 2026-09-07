@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Boing Top</title>
+  <style>
+    body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+    h1 { color: #0f0; }
+    .btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #444; border-radius: 8px; background: #16213e; color: #e0e0e0; font-family: monospace; font-size: 16px; cursor: pointer; text-align: left; }
+    .btn:hover { background: #1a3a5c; border-color: #0f0; }
+    .btn:active { background: #0f0; color: #000; }
+    .num { color: #0f0; font-weight: bold; margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Boing Top</h1>
+  <p>15 sounds for top bounce.</p>
+
+  <button class="btn" onclick="t1()"><span class="num">01</span> Light Ping</button>
+  <button class="btn" onclick="t2()"><span class="num">02</span> Quick Flick</button>
+  <button class="btn" onclick="t3()"><span class="num">03</span> Tiny Boing</button>
+  <button class="btn" onclick="t4()"><span class="num">04</span> Soft Bounce</button>
+  <button class="btn" onclick="t5()"><span class="num">05</span> Feather Spring</button>
+  <button class="btn" onclick="t6()"><span class="num">06</span> Paper Clip</button>
+  <button class="btn" onclick="t7()"><span class="num">07</span> Rubber Tip</button>
+  <button class="btn" onclick="t8()"><span class="num">08</span> Micro Spring</button>
+  <button class="btn" onclick="t9()"><span class="num">09</span> High Wobble</button>
+  <button class="btn" onclick="t10()"><span class="num">10</span> Cap Popping</button>
+  <button class="btn" onclick="t11()"><span class="num">11</span> Bubble Pop</button>
+  <button class="btn" onclick="t12()"><span class="num">12</span> Cork Spring</button>
+  <button class="btn" onclick="t13()"><span class="num">13</span> Light Coil</button>
+  <button class="btn" onclick="t14()"><span class="num">14</span> Pin Spring</button>
+  <button class="btn" onclick="t15()"><span class="num">15</span> Whisper Boing</button>
+
+  <script>
+    var ctx;
+    function C() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+
+    function t1() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1200, t);
+      o.frequency.exponentialRampToValueAtTime(600, t + 0.06);
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      o.start(t); o.stop(t + 0.08);
+    }
+
+    function t2() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(800, t);
+      o.frequency.exponentialRampToValueAtTime(400, t + 0.04);
+      g.gain.setValueAtTime(0.25, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+      o.start(t); o.stop(t + 0.06);
+    }
+
+    function t3() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(600, t);
+      o.frequency.exponentialRampToValueAtTime(300, t + 0.08);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 20; lg.gain.value = 80;
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+      o.start(t); o.stop(t + 0.1);
+      lfo.start(t); lfo.stop(t + 0.1);
+    }
+
+    function t4() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(500, t);
+      o.frequency.exponentialRampToValueAtTime(250, t + 0.1);
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+      o.start(t); o.stop(t + 0.12);
+    }
+
+    function t5() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(900, t);
+      o.frequency.exponentialRampToValueAtTime(450, t + 0.05);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 25; lg.gain.value = 60;
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      o.start(t); o.stop(t + 0.08);
+      lfo.start(t); lfo.stop(t + 0.08);
+    }
+
+    function t6() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(2000, t);
+      o.frequency.exponentialRampToValueAtTime(1000, t + 0.02);
+      g.gain.setValueAtTime(0.1, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+      o.start(t); o.stop(t + 0.03);
+    }
+
+    function t7() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(700, t);
+      o.frequency.exponentialRampToValueAtTime(350, t + 0.06);
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      o.start(t); o.stop(t + 0.08);
+    }
+
+    function t8() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1500, t);
+      o.frequency.exponentialRampToValueAtTime(800, t + 0.03);
+      g.gain.setValueAtTime(0.12, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+      o.start(t); o.stop(t + 0.04);
+    }
+
+    function t9() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(800, t);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 30; lg.gain.value = 100;
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+      o.start(t); o.stop(t + 0.12);
+      lfo.start(t); lfo.stop(t + 0.12);
+    }
+
+    function t10() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1000, t);
+      o.frequency.exponentialRampToValueAtTime(500, t + 0.03);
+      g.gain.setValueAtTime(0.25, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+      o.start(t); o.stop(t + 0.05);
+    }
+
+    function t11() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1200, t);
+      o.frequency.exponentialRampToValueAtTime(600, t + 0.02);
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+      o.start(t); o.stop(t + 0.04);
+    }
+
+    function t12() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(500, t);
+      o.frequency.exponentialRampToValueAtTime(800, t + 0.02);
+      o.frequency.exponentialRampToValueAtTime(300, t + 0.1);
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+      o.start(t); o.stop(t + 0.12);
+    }
+
+    function t13() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(700, t);
+      o.frequency.exponentialRampToValueAtTime(350, t + 0.08);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 18; lg.gain.value = 50;
+      g.gain.setValueAtTime(0.18, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+      o.start(t); o.stop(t + 0.1);
+      lfo.start(t); lfo.stop(t + 0.1);
+    }
+
+    function t14() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(1800, t);
+      o.frequency.exponentialRampToValueAtTime(900, t + 0.025);
+      g.gain.setValueAtTime(0.1, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+      o.start(t); o.stop(t + 0.035);
+    }
+
+    function t15() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(400, t);
+      o.frequency.exponentialRampToValueAtTime(200, t + 0.1);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 15; lg.gain.value = 40;
+      g.gain.setValueAtTime(0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      o.start(t); o.stop(t + 0.15);
+      lfo.start(t); lfo.stop(t + 0.15);
+    }
+  </script>
+</body>
+</html>

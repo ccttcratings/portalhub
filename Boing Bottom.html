@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Boing Bottom</title>
+  <style>
+    body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+    h1 { color: #0f0; }
+    .btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #444; border-radius: 8px; background: #16213e; color: #e0e0e0; font-family: monospace; font-size: 16px; cursor: pointer; text-align: left; }
+    .btn:hover { background: #1a3a5c; border-color: #0f0; }
+    .btn:active { background: #0f0; color: #000; }
+    .num { color: #0f0; font-weight: bold; margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Boing Bottom</h1>
+  <p>25 sounds for bottom bounce.</p>
+
+  <button class="btn" onclick="b1()"><span class="num">01</span> Deep Wobble</button>
+  <button class="btn" onclick="b2()"><span class="num">02</span> Heavy Spring</button>
+  <button class="btn" onclick="b3()"><span class="num">03</span> Floor Hit</button>
+  <button class="btn" onclick="b4()"><span class="num">04</span> Trampoline Down</button>
+  <button class="btn" onclick="b5()"><span class="num">05</span> Rubber Bounce</button>
+  <button class="btn" onclick="b6()"><span class="num">06</span> Bungee Drop</button>
+  <button class="btn" onclick="b7()"><span class="num">07</span> Giant Coil</button>
+  <button class="btn" onclick="b8()"><span class="num">08</span> Mattress Spring</button>
+  <button class="btn" onclick="b9()"><span class="num">09</span> Bed Squeak</button>
+  <button class="btn" onclick="b10()"><span class="num">10</span> Pogo Bottom</button>
+  <button class="btn" onclick="b11()"><span class="num">11</span> Slam Bounce</button>
+  <button class="btn" onclick="b12()"><span class="num">12</span> Heavy Door</button>
+  <button class="btn" onclick="b13()"><span class="num">13</span> Metal Clank</button>
+  <button class="btn" onclick="b14()"><span class="num">14</span> Pipe Spring</button>
+  <button class="btn" onclick="b15()"><span class="num">15</span> Steel Wobble</button>
+  <button class="btn" onclick="b16()"><span class="num">16</span> Iron Boing</button>
+  <button class="btn" onclick="b17()"><span class="num">17</span> Gate Spring</button>
+  <button class="btn" onclick="b18()"><span class="num">18</span> Rusty Hinge</button>
+  <button class="btn" onclick="b19()"><span class="num">19</span> Trampoline Pro</button>
+  <button class="btn" onclick="b20()"><span class="num">20</span> Mega Drop</button>
+  <button class="btn" onclick="b21()"><span class="num">21</span> Earthquake</button>
+  <button class="btn" onclick="b22()"><span class="num">22</span> Thunder Boing</button>
+  <button class="btn" onclick="b23()"><span class="num">23</span> Volcano</button>
+  <button class="btn" onclick="b24()"><span class="num">24</span> Avalanche</button>
+  <button class="btn" onclick="b25()"><span class="num">25</span> Nuclear Boing</button>
+
+  <script>
+    var ctx;
+    function C() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+
+    function b1() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(80, t);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 5; lg.gain.value = 40;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+      o.start(t); o.stop(t + 0.6);
+      lfo.start(t); lfo.stop(t + 0.6);
+    }
+
+    function b2() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(120, t);
+      o.frequency.exponentialRampToValueAtTime(60, t + 0.4);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 8; lg.gain.value = 30;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+      o.start(t); o.stop(t + 0.5);
+      lfo.start(t); lfo.stop(t + 0.5);
+    }
+
+    function b3() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(200, t);
+      o.frequency.exponentialRampToValueAtTime(30, t + 0.15);
+      g.gain.setValueAtTime(0.6, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      o.start(t); o.stop(t + 0.2);
+    }
+
+    function b4() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(150, t);
+      o.frequency.exponentialRampToValueAtTime(250, t + 0.03);
+      o.frequency.exponentialRampToValueAtTime(50, t + 0.35);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 6; lg.gain.value = 30;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      o.start(t); o.stop(t + 0.4);
+      lfo.start(t); lfo.stop(t + 0.4);
+    }
+
+    function b5() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(300, t);
+      o.frequency.exponentialRampToValueAtTime(80, t + 0.2);
+      g.gain.setValueAtTime(0.4, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      o.start(t); o.stop(t + 0.25);
+    }
+
+    function b6() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(400, t);
+      o.frequency.exponentialRampToValueAtTime(25, t + 0.8);
+      g.gain.setValueAtTime(0.4, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
+      o.start(t); o.stop(t + 0.9);
+    }
+
+    function b7() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(100, t);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 4; lg.gain.value = 60;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+      o.start(t); o.stop(t + 0.8);
+      lfo.start(t); lfo.stop(t + 0.8);
+    }
+
+    function b8() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(180, t);
+      o.frequency.exponentialRampToValueAtTime(90, t + 0.3);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 7; lg.gain.value = 25;
+      g.gain.setValueAtTime(0.45, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      o.start(t); o.stop(t + 0.4);
+      lfo.start(t); lfo.stop(t + 0.4);
+    }
+
+    function b9() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(400, t);
+      o.frequency.exponentialRampToValueAtTime(200, t + 0.05);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 25; lg.gain.value = 100;
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      o.start(t); o.stop(t + 0.15);
+      lfo.start(t); lfo.stop(t + 0.15);
+    }
+
+    function b10() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(250, t);
+      o.frequency.exponentialRampToValueAtTime(400, t + 0.02);
+      o.frequency.exponentialRampToValueAtTime(120, t + 0.15);
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+      o.start(t); o.stop(t + 0.18);
+    }
+
+    function b11() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(300, t);
+      o.frequency.exponentialRampToValueAtTime(40, t + 0.2);
+      g.gain.setValueAtTime(0.3, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      o.start(t); o.stop(t + 0.25);
+    }
+
+    function b12() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'square';
+      o.frequency.setValueAtTime(150, t);
+      o.frequency.exponentialRampToValueAtTime(60, t + 0.1);
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      o.start(t); o.stop(t + 0.15);
+    }
+
+    function b13() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'square';
+      o.frequency.setValueAtTime(800, t);
+      o.frequency.exponentialRampToValueAtTime(200, t + 0.06);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 40; lg.gain.value = 150;
+      g.gain.setValueAtTime(0.1, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+      o.start(t); o.stop(t + 0.1);
+      lfo.start(t); lfo.stop(t + 0.1);
+    }
+
+    function b14() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(350, t);
+      o.frequency.exponentialRampToValueAtTime(100, t + 0.3);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 12; lg.gain.value = 50;
+      g.gain.setValueAtTime(0.35, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+      o.start(t); o.stop(t + 0.35);
+      lfo.start(t); lfo.stop(t + 0.35);
+    }
+
+    function b15() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(500, t);
+      o.frequency.exponentialRampToValueAtTime(150, t + 0.15);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 30; lg.gain.value = 120;
+      g.gain.setValueAtTime(0.12, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      o.start(t); o.stop(t + 0.2);
+      lfo.start(t); lfo.stop(t + 0.2);
+    }
+
+    function b16() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'square';
+      o.frequency.setValueAtTime(250, t);
+      o.frequency.exponentialRampToValueAtTime(80, t + 0.2);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 15; lg.gain.value = 80;
+      g.gain.setValueAtTime(0.15, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      o.start(t); o.stop(t + 0.25);
+      lfo.start(t); lfo.stop(t + 0.25);
+    }
+
+    function b17() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(180, t);
+      o.frequency.exponentialRampToValueAtTime(60, t + 0.35);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 10; lg.gain.value = 40;
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      o.start(t); o.stop(t + 0.4);
+      lfo.start(t); lfo.stop(t + 0.4);
+    }
+
+    function b18() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(120, t);
+      o.frequency.linearRampToValueAtTime(200, t + 0.05);
+      o.frequency.exponentialRampToValueAtTime(50, t + 0.3);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 6; lg.gain.value = 30;
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+      o.start(t); o.stop(t + 0.35);
+      lfo.start(t); lfo.stop(t + 0.35);
+    }
+
+    function b19() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(200, t);
+      o.frequency.exponentialRampToValueAtTime(350, t + 0.04);
+      o.frequency.exponentialRampToValueAtTime(80, t + 0.3);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 10; lg.gain.value = 50;
+      g.gain.setValueAtTime(0.45, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+      o.start(t); o.stop(t + 0.35);
+      lfo.start(t); lfo.stop(t + 0.35);
+    }
+
+    function b20() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(100, t);
+      o.frequency.exponentialRampToValueAtTime(200, t + 0.05);
+      o.frequency.exponentialRampToValueAtTime(20, t + 0.6);
+      g.gain.setValueAtTime(0.55, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+      o.start(t); o.stop(t + 0.7);
+    }
+
+    function b21() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(40, t);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 3; lg.gain.value = 20;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+      o.start(t); o.stop(t + 0.8);
+      lfo.start(t); lfo.stop(t + 0.8);
+    }
+
+    function b22() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(80, t);
+      o.frequency.exponentialRampToValueAtTime(160, t + 0.03);
+      o.frequency.exponentialRampToValueAtTime(30, t + 0.4);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 6; lg.gain.value = 40;
+      g.gain.setValueAtTime(0.55, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+      o.start(t); o.stop(t + 0.5);
+      lfo.start(t); lfo.stop(t + 0.5);
+    }
+
+    function b23() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(50, t);
+      o.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 2; lg.gain.value = 30;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+      o.start(t); o.stop(t + 0.7);
+      lfo.start(t); lfo.stop(t + 0.7);
+    }
+
+    function b24() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(60, t);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 4; lg.gain.value = 25;
+      g.gain.setValueAtTime(0.5, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+      o.start(t); o.stop(t + 0.6);
+      lfo.start(t); lfo.stop(t + 0.6);
+    }
+
+    function b25() {
+      var c = C(), t = c.currentTime;
+      var o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(500, t);
+      o.frequency.exponentialRampToValueAtTime(20, t + 1.0);
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.connect(lg); lg.connect(o.frequency);
+      lfo.frequency.value = 15; lg.gain.value = 200;
+      var lfo2 = c.createOscillator(), lg2 = c.createGain();
+      lfo2.connect(lg2); lg2.connect(g.gain);
+      lfo2.frequency.value = 2; lg2.gain.value = 0.3;
+      g.gain.setValueAtTime(0.4, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+      o.start(t); o.stop(t + 1.2);
+      lfo.start(t); lfo.stop(t + 1.2);
+      lfo2.start(t); lfo2.stop(t + 1.2);
+    }
+  </script>
+</body>
+</html>
