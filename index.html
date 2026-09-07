@@ -19,8 +19,10 @@
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
     #ptr { position: fixed; top: 0; left: 50%; width: 64px; height: 64px; margin-left: -32px; margin-top: -68px; z-index: 9999; pointer-events: none; }
     #ptr .bg { fill: #1a1a1a; }
-    #ptr .arc { fill: none; stroke: url(#grad); stroke-width: 5; stroke-linecap: round; }
-    #ptr .arrow { fill: none; stroke: url(#grad); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+    #ptr .arc { fill: none; stroke: url(#grad); stroke-width: 6; stroke-linecap: round; }
+    #ptr .arrow { fill: none; stroke: url(#grad); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    #ptr .face { fill: none; stroke: #e05050; stroke-width: 2; stroke-linecap: round; }
+    #ptr .eye { fill: #e05050; }
     #ptr .ring { transition: opacity 0.15s; }
     #ptr.spin .arrow { opacity: 0; }
     #ptr.spin svg { animation: ptrSpin 0.7s linear infinite; }
@@ -104,7 +106,7 @@
 </head>
 <body>
   <div class="card">
-    <div id="ptr"><svg viewBox="0 0 64 64"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle class="bg" cx="32" cy="32" r="30"/><g class="ring"><path class="arc" d="M32 4 A28 28 0 1 0 56.2 22.1"/><polyline class="arrow" points="50,28 56.2,22.1 50,16"/></g></svg></div>
+    <div id="ptr"><svg viewBox="0 0 64 64"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle class="bg" cx="32" cy="32" r="30"/><circle class="eye" cx="25" cy="28" r="2"/><circle class="eye" cx="39" cy="28" r="2"/><path class="face" d="M23 40 Q32 34 41 40"/><g class="ring"><path class="arc" d="M32 10 A22 22 0 1 1 52.6 18.6"/><polyline class="arrow" points="32,10 38,4 38,16"/></g></svg></div>
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
 
