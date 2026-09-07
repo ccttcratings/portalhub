@@ -172,25 +172,19 @@
         drag.animating = true;
         var lastTime = Date.now();
         var vy = v;
-        var pos = window.scrollY;
         function step() {
           if (!drag.animating) return;
           var now = Date.now();
           var elapsed = now - lastTime;
           lastTime = now;
           vy *= Math.pow(friction, elapsed / 16);
-          if (Math.abs(vy) < 0.01) {
-            drag.animating = false;
-            var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            var snapped = pos < 20 ? 0 : pos > maxScroll - 20 ? maxScroll : null;
-            if (snapped !== null) window.scrollTo(0, snapped);
-            return;
-          }
+          if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          pos += vy * elapsed;
-          if (pos < 0) { pos = 0; if (vy < 0) vy = -vy * bounceDecay; }
-          if (pos > maxScroll) { pos = maxScroll; if (vy > 0) vy = -vy * bounceDecay; }
-          window.scrollTo(0, pos);
+          var scroll = window.scrollY;
+          var next = scroll + vy * elapsed;
+          if (next < 0) { next = 0; vy = -vy * bounceDecay; }
+          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
+          window.scrollTo(0, next);
           requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
