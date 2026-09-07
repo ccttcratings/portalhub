@@ -133,7 +133,7 @@
   </div>
   <script>
     (function() {
-      var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
+      var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false, pulled: false, pullDist: 0 };
       var friction = 0.999;
       var bounceDecay = 1.0;
 
@@ -144,13 +144,19 @@
         drag.startScroll = window.scrollY;
         drag.history = [{ y: e.touches[0].clientY, t: Date.now() }];
         drag.animating = false;
+        drag.pulled = false;
+        drag.pullDist = 0;
       }, { passive: true });
 
       document.addEventListener('touchmove', function(e) {
         if (!drag.active || e.touches.length !== 1) return;
         var dy = drag.startY - e.touches[0].clientY;
         var target = drag.startScroll + dy;
-        if (target <= 0 && dy < 0) { drag.pulled = true; return; }
+        if (drag.startScroll <= 0 && dy < 0) {
+          drag.pulled = true;
+          drag.pullDist = -dy;
+          return;
+        }
         drag.pulled = false;
         window.scrollTo(0, target);
         var now = Date.now();
@@ -161,7 +167,7 @@
       document.addEventListener('touchend', function() {
         if (!drag.active) return;
         drag.active = false;
-        if (drag.pulled) { location.reload(); return; }
+        if (drag.pulled && drag.pullDist > 50) { location.reload(); return; }
         var h = drag.history;
         if (h.length < 2) return;
         var last = h[h.length - 1], first = h[0];
@@ -182,12 +188,17 @@
           var elapsed = now - lastTime;
           lastTime = now;
           vy *= Math.pow(friction, elapsed / 16);
-          if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           var scroll = window.scrollY;
           var next = scroll + vy * elapsed;
           if (next < 0) { next = 0; vy = -vy * bounceDecay; }
           else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
+          if (Math.abs(vy) < 0.01) {
+            drag.animating = false;
+            if (next < 30) window.scrollTo(0, 0);
+            else if (next > maxScroll - 30) window.scrollTo(0, maxScroll);
+            return;
+          }
           window.scrollTo(0, next);
           requestAnimationFrame(step);
         }
