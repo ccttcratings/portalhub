@@ -160,29 +160,40 @@
       function popSound() {
         ensureAudio();
         if (!audioCtx) return;
+        var t = audioCtx.currentTime;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.setValueAtTime(800, audioCtx.currentTime);
-        o.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
-        g.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-        o.start(); o.stop(audioCtx.currentTime + 0.08);
+        o.frequency.setValueAtTime(800, t);
+        o.frequency.exponentialRampToValueAtTime(200, t + 0.05);
+        g.gain.setValueAtTime(0.5, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+        o.start(); o.stop(t + 0.08);
       }
-      function boingSound() {
+      function bottomBounce() {
         ensureAudio();
         if (!audioCtx) return;
+        var t = audioCtx.currentTime;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
         o.type = 'sine';
-        o.frequency.setValueAtTime(300, audioCtx.currentTime);
-        o.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.25);
-        var lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
-        lfo.connect(lg); lg.connect(o.frequency);
-        lfo.frequency.value = 18; lg.gain.value = 60;
-        g.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-        o.start(); o.stop(audioCtx.currentTime + 0.3);
-        lfo.start(); lfo.stop(audioCtx.currentTime + 0.3);
+        o.frequency.setValueAtTime(200, t);
+        o.frequency.exponentialRampToValueAtTime(30, t + 0.15);
+        g.gain.setValueAtTime(0.6, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+        o.start(); o.stop(t + 0.2);
+      }
+      function topBounce() {
+        ensureAudio();
+        if (!audioCtx) return;
+        var t = audioCtx.currentTime;
+        var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(800, t);
+        o.frequency.exponentialRampToValueAtTime(400, t + 0.04);
+        g.gain.setValueAtTime(0.25, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+        o.start(); o.stop(t + 0.06);
       }
       document.addEventListener('click', function(e) {
         if (e.target.closest('.btn, .tinyurl')) popSound();
@@ -266,8 +277,8 @@
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           var scroll = window.scrollY;
           var next = scroll + vy * elapsed;
-          if (next < 0) { next = 0; vy = -vy * bounceDecay; boingSound(); }
-          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
+          if (next < 0) { next = 0; vy = -vy * bounceDecay; bottomBounce(); }
+          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; topBounce(); }
           window.scrollTo(0, next);
           requestAnimationFrame(step);
         }
