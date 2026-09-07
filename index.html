@@ -152,21 +152,25 @@
       var ptrRing = ptr.querySelector('.ring');
       var audioCtx = null;
       function ensureAudio() {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (!audioCtx) {
+          try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+        }
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
       }
       function popSound() {
         ensureAudio();
+        if (!audioCtx) return;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
         o.frequency.setValueAtTime(800, audioCtx.currentTime);
         o.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
-        g.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-        o.start(); o.stop(audioCtx.currentTime + 0.05);
+        g.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        o.start(); o.stop(audioCtx.currentTime + 0.08);
       }
       function boingSound() {
         ensureAudio();
+        if (!audioCtx) return;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
         o.type = 'sine';
@@ -175,7 +179,7 @@
         var lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
         lfo.connect(lg); lg.connect(o.frequency);
         lfo.frequency.value = 18; lg.gain.value = 60;
-        g.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        g.gain.setValueAtTime(0.5, audioCtx.currentTime);
         g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
         o.start(); o.stop(audioCtx.currentTime + 0.3);
         lfo.start(); lfo.stop(audioCtx.currentTime + 0.3);
