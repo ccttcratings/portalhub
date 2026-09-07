@@ -16,7 +16,7 @@
     }
 
     /* Core Layout Styles */
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
@@ -133,9 +133,9 @@
   </div>
   <script>
     (function() {
-      var drag = { active: false, startY: 0, startScroll: 0, history: [] };
-      var friction = 0.999;
-      var bounceDecay = 1.0;
+      var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
+      var friction = 0.995;
+      var bounceDecay = 0.7;
 
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length !== 1) return;
@@ -143,6 +143,7 @@
         drag.startY = e.touches[0].clientY;
         drag.startScroll = window.scrollY;
         drag.history = [{ y: e.touches[0].clientY, t: Date.now() }];
+        drag.animating = false;
       }, { passive: true });
 
       document.addEventListener('touchmove', function(e) {
@@ -163,26 +164,31 @@
         var dt = last.t - first.t;
         if (dt <= 0) return;
         var velocity = (first.y - last.y) / dt;
-        if (Math.abs(velocity) < 0.3) return;
+        if (Math.abs(velocity) < 0.5) return;
         startScrollMomentum(velocity);
       }, { passive: true });
 
       function startScrollMomentum(v) {
-        var animating = true;
+        drag.animating = true;
         var lastTime = Date.now();
         var vy = v;
         function step() {
-          if (!animating) return;
+          if (!drag.animating) return;
           var now = Date.now();
           var elapsed = now - lastTime;
           lastTime = now;
           vy *= Math.pow(friction, elapsed / 16);
+          if (Math.abs(vy) < 0.5) {
+            drag.animating = false;
+            var snapped = next < 30 ? 0 : next > maxScroll - 30 ? maxScroll : Math.round(next);
+            window.scrollTo(0, snapped);
+            return;
+          }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           var scroll = window.scrollY;
           var next = scroll + vy * elapsed;
-          if (next < 0) { animating = false; return; }
-          if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
-          if (Math.abs(vy) < 0.01) { animating = false; return; }
+          if (next < 0) { next = 0; vy = -vy * bounceDecay; }
+          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
           window.scrollTo(0, next);
           requestAnimationFrame(step);
         }
