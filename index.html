@@ -175,12 +175,20 @@
         var t = audioCtx.currentTime;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
-        o.type = 'sine';
-        o.frequency.setValueAtTime(200, t);
-        o.frequency.exponentialRampToValueAtTime(30, t + 0.15);
-        g.gain.setValueAtTime(0.6, t);
-        g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-        o.start(); o.stop(t + 0.2);
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(500, t);
+        o.frequency.exponentialRampToValueAtTime(20, t + 1.0);
+        var lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
+        lfo.connect(lg); lg.connect(o.frequency);
+        lfo.frequency.value = 15; lg.gain.value = 200;
+        var lfo2 = audioCtx.createOscillator(), lg2 = audioCtx.createGain();
+        lfo2.connect(lg2); lg2.connect(g.gain);
+        lfo2.frequency.value = 2; lg2.gain.value = 0.3;
+        g.gain.setValueAtTime(0.4, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+        o.start(); o.stop(t + 1.2);
+        lfo.start(); lfo.stop(t + 1.2);
+        lfo2.start(); lfo2.stop(t + 1.2);
       }
       function topBounce() {
         ensureAudio();
@@ -188,12 +196,16 @@
         var t = audioCtx.currentTime;
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
-        o.type = 'triangle';
-        o.frequency.setValueAtTime(800, t);
-        o.frequency.exponentialRampToValueAtTime(400, t + 0.04);
-        g.gain.setValueAtTime(0.25, t);
-        g.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
-        o.start(); o.stop(t + 0.06);
+        o.type = 'sine';
+        o.frequency.setValueAtTime(400, t);
+        o.frequency.exponentialRampToValueAtTime(200, t + 0.1);
+        var lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
+        lfo.connect(lg); lg.connect(o.frequency);
+        lfo.frequency.value = 15; lg.gain.value = 40;
+        g.gain.setValueAtTime(0.08, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        o.start(); o.stop(t + 0.15);
+        lfo.start(); lfo.stop(t + 0.15);
       }
       document.addEventListener('click', function(e) {
         if (e.target.closest('.btn, .tinyurl')) popSound();
