@@ -16,7 +16,7 @@
     }
 
     /* Core Layout Styles */
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
@@ -150,8 +150,8 @@
         if (!drag.active || e.touches.length !== 1) return;
         var dy = drag.startY - e.touches[0].clientY;
         var target = drag.startScroll + dy;
-        if (target <= 0 && dy < 0) { drag.native = true; return; }
-        drag.native = false;
+        if (target <= 0 && dy < 0) { drag.pulled = true; return; }
+        drag.pulled = false;
         window.scrollTo(0, target);
         var now = Date.now();
         drag.history.push({ y: e.touches[0].clientY, t: now });
@@ -161,7 +161,7 @@
       document.addEventListener('touchend', function() {
         if (!drag.active) return;
         drag.active = false;
-        if (drag.native) return;
+        if (drag.pulled) { location.reload(); return; }
         var h = drag.history;
         if (h.length < 2) return;
         var last = h[h.length - 1], first = h[0];
