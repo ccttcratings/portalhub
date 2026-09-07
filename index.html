@@ -195,7 +195,7 @@
           if (parseFloat(ptr.style.opacity) >= 1) {
             ptr.className = 'spin';
             ptrRing.style.transform = '';
-            location.reload();
+            setTimeout(function() { location.reload(); }, 750);
           } else {
             ptr.style.marginTop = '';
             ptr.style.opacity = '';
