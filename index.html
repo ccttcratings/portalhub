@@ -17,6 +17,10 @@
 
     /* Core Layout Styles */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
+    #ptr { position: fixed; top: 0; left: 50%; transform: translateX(-50%) translateY(-60px); width: 40px; height: 40px; border-radius: 50%; border: 3px solid #ccc; border-top-color: #666; transition: none; z-index: 9999; }
+    #ptr.show { transition: transform 0.2s; }
+    #ptr.spin { animation: ptrSpin 0.6s linear infinite; transition: transform 0.2s; }
+    @keyframes ptrSpin { to { transform: translateX(-50%) rotate(360deg); } }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
@@ -96,6 +100,7 @@
 </head>
 <body>
   <div class="card">
+    <div id="ptr"></div>
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
 
@@ -136,6 +141,7 @@
       var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
       var friction = 0.999;
       var bounceDecay = 1.0;
+      var ptr = document.getElementById('ptr');
 
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length !== 1) return;
@@ -144,11 +150,24 @@
         drag.startScroll = window.scrollY;
         drag.history = [{ y: e.touches[0].clientY, t: Date.now() }];
         drag.animating = false;
+        drag.ptrActive = false;
+        ptr.className = '';
       }, { passive: true });
 
       document.addEventListener('touchmove', function(e) {
         if (!drag.active || e.touches.length !== 1) return;
         var dy = drag.startY - e.touches[0].clientY;
+        if (drag.startScroll <= 0 && dy < 0) {
+          drag.ptrActive = true;
+          var dist = Math.min(-dy, 120);
+          ptr.style.transform = 'translateX(-50%) translateY(' + (dist - 60) + 'px)';
+          ptr.className = '';
+          if (dist > 60) { ptr.className = 'show'; }
+          return;
+        }
+        drag.ptrActive = false;
+        ptr.className = '';
+        ptr.style.transform = '';
         window.scrollTo(0, drag.startScroll + dy);
         var now = Date.now();
         drag.history.push({ y: e.touches[0].clientY, t: now });
@@ -158,6 +177,16 @@
       document.addEventListener('touchend', function() {
         if (!drag.active) return;
         drag.active = false;
+        if (drag.ptrActive) {
+          if (ptr.className === 'show') {
+            ptr.className = 'spin';
+            location.reload();
+          } else {
+            ptr.style.transform = '';
+            ptr.className = '';
+          }
+          return;
+        }
         var h = drag.history;
         if (h.length < 2) return;
         var last = h[h.length - 1], first = h[0];
@@ -178,12 +207,7 @@
           var elapsed = now - lastTime;
           lastTime = now;
           vy *= Math.pow(friction, elapsed / 16);
-          if (Math.abs(vy) < 0.01) {
-            drag.animating = false;
-            if (next < 10) window.scrollTo(0, 0);
-            else if (next > maxScroll - 10) window.scrollTo(0, maxScroll);
-            return;
-          }
+          if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           var scroll = window.scrollY;
           var next = scroll + vy * elapsed;
