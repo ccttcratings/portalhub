@@ -23,8 +23,9 @@
     #ptr .arrow { fill: none; stroke: url(#grad); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
     #ptr .face { fill: none; stroke: #e05050; stroke-width: 2; stroke-linecap: round; }
     #ptr .eye { fill: #e05050; }
-    #ptr .ring { transition: opacity 0.15s; }
-    #ptr.spin .arrow { opacity: 0; }
+    #ptr .ring { transform-origin: 32px 32px; }
+    #ptr .head, #ptr .tail { transition: opacity 0.15s; }
+    #ptr.spin .head, #ptr.spin .tail { opacity: 0; }
     #ptr.spin svg { animation: ptrSpin 0.7s linear infinite; }
     @keyframes ptrSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -106,7 +107,7 @@
 </head>
 <body>
   <div class="card">
-    <div id="ptr"><svg viewBox="0 0 64 64"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle class="bg" cx="32" cy="32" r="30"/><circle class="eye" cx="25" cy="28" r="2"/><circle class="eye" cx="39" cy="28" r="2"/><path class="face" d="M23 40 Q32 34 41 40"/><g class="ring"><path class="arc" d="M32 10 A22 22 0 1 1 52.6 18.6"/><polyline class="arrow" points="32,10 38,4 38,16"/></g></svg></div>
+    <div id="ptr"><svg viewBox="0 0 64 64"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle cx="32" cy="32" r="30" fill="#1a1a1a"/><circle cx="25" cy="28" r="2" fill="#e05050"/><circle cx="39" cy="28" r="2" fill="#e05050"/><path d="M23 40 Q32 34 41 40" fill="none" stroke="#e05050" stroke-width="2" stroke-linecap="round"/><g class="ring"><path d="M49 18 A22 22 0 1 1 28 10" fill="none" stroke="url(#grad)" stroke-width="6" stroke-linecap="butt"/><polygon class="head" points="27,4 40,10 27,16" fill="url(#grad)"/><line class="tail" x1="48" y1="20" x2="52" y2="16" stroke="#e05050" stroke-width="2.5" stroke-linecap="round"/><line class="tail" x1="50" y1="17" x2="54" y2="13" stroke="#e05050" stroke-width="2.5" stroke-linecap="round"/><line class="tail" x1="52" y1="15" x2="55" y2="12" stroke="#e05050" stroke-width="2.5" stroke-linecap="round"/></g></svg></div>
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
 
@@ -171,8 +172,8 @@
           ptr.style.marginTop = (dist - 60) + 'px';
           ptr.style.opacity = pct;
           var rot = Math.min(dist * 3, 360);
+          ptrRing.style.transformOrigin = '32px 32px';
           ptrRing.style.transform = 'rotate(' + rot + 'deg)';
-          ptrRing.style.transformOrigin = '28px 28px';
           ptr.className = '';
           return;
         }
