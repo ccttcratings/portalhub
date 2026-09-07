@@ -16,7 +16,7 @@
     }
 
     /* Core Layout Styles */
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
@@ -180,11 +180,13 @@
           vy *= Math.pow(friction, elapsed / 16);
           if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          var scroll = window.scrollY;
-          var next = scroll + vy * elapsed;
-          if (next < 0) { next = 0; vy = -vy * bounceDecay; }
-          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
-          window.scrollTo(0, next);
+          var prevScroll = window.scrollY;
+          window.scrollBy(0, vy * elapsed);
+          var atTop = window.scrollY <= 0;
+          var atBottom = window.scrollY >= maxScroll;
+          if ((atTop && vy < 0) || (atBottom && vy > 0)) {
+            vy = -vy * bounceDecay;
+          }
           requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
