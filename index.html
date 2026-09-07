@@ -17,10 +17,10 @@
 
     /* Core Layout Styles */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
-    #ptr { position: fixed; top: 0; left: 50%; width: 56px; height: 56px; margin-left: -28px; margin-top: -60px; z-index: 9999; pointer-events: none; }
+    #ptr { position: fixed; top: 0; left: 50%; width: 64px; height: 64px; margin-left: -32px; margin-top: -68px; z-index: 9999; pointer-events: none; }
     #ptr .bg { fill: #1a1a1a; }
-    #ptr .arc { fill: none; stroke: url(#grad); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 60 80; }
-    #ptr .arrow { fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    #ptr .arc { fill: none; stroke: url(#grad); stroke-width: 5; stroke-linecap: round; }
+    #ptr .arrow { fill: none; stroke: url(#grad); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
     #ptr .ring { transition: opacity 0.15s; }
     #ptr.spin .arrow { opacity: 0; }
     #ptr.spin svg { animation: ptrSpin 0.7s linear infinite; }
@@ -104,7 +104,7 @@
 </head>
 <body>
   <div class="card">
-    <div id="ptr"><svg viewBox="0 0 56 56"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle class="bg" cx="28" cy="28" r="26"/><g class="ring"><path class="arc" d="M28 4 A24 24 0 1 0 46 14"/><polyline class="arrow" points="41,19 46,14 41,9"/></g></svg></div>
+    <div id="ptr"><svg viewBox="0 0 64 64"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#81d4fa"/></linearGradient></defs><circle class="bg" cx="32" cy="32" r="30"/><g class="ring"><path class="arc" d="M32 4 A28 28 0 1 0 50 16"/><polyline class="arrow" points="44,22 50,16 44,10"/></g></svg></div>
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
 
