@@ -192,11 +192,16 @@
         var o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
         o.type = 'sine';
-        o.frequency.setValueAtTime(1500, t);
-        o.frequency.exponentialRampToValueAtTime(600, t + 0.03);
-        g.gain.setValueAtTime(0.2, t);
-        g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
-        o.start(); o.stop(t + 0.04);
+        o.frequency.setValueAtTime(80, t);
+        o.frequency.exponentialRampToValueAtTime(200, t + 0.05);
+        o.frequency.exponentialRampToValueAtTime(40, t + 0.5);
+        var lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
+        lfo.connect(lg); lg.connect(o.frequency);
+        lfo.frequency.value = 10; lg.gain.value = 40;
+        g.gain.setValueAtTime(0.5, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+        o.start(); o.stop(t + 0.6);
+        lfo.start(); lfo.stop(t + 0.6);
       }
       document.addEventListener('click', function(e) {
         if (e.target.closest('.btn, .tinyurl')) popSound();
