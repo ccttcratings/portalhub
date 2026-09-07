@@ -149,7 +149,10 @@
       document.addEventListener('touchmove', function(e) {
         if (!drag.active || e.touches.length !== 1) return;
         var dy = drag.startY - e.touches[0].clientY;
-        window.scrollTo(0, drag.startScroll + dy);
+        var target = drag.startScroll + dy;
+        if (target <= 0 && dy < 0) { drag.native = true; return; }
+        drag.native = false;
+        window.scrollTo(0, target);
         var now = Date.now();
         drag.history.push({ y: e.touches[0].clientY, t: now });
         if (drag.history.length > 8) drag.history.shift();
@@ -158,6 +161,7 @@
       document.addEventListener('touchend', function() {
         if (!drag.active) return;
         drag.active = false;
+        if (drag.native) return;
         var h = drag.history;
         if (h.length < 2) return;
         var last = h[h.length - 1], first = h[0];
@@ -180,13 +184,11 @@
           vy *= Math.pow(friction, elapsed / 16);
           if (Math.abs(vy) < 0.01) { drag.animating = false; return; }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          var prevScroll = window.scrollY;
-          window.scrollBy(0, vy * elapsed);
-          var atTop = window.scrollY <= 0;
-          var atBottom = window.scrollY >= maxScroll;
-          if ((atTop && vy < 0) || (atBottom && vy > 0)) {
-            vy = -vy * bounceDecay;
-          }
+          var scroll = window.scrollY;
+          var next = scroll + vy * elapsed;
+          if (next < 0) { next = 0; vy = -vy * bounceDecay; }
+          else if (next > maxScroll) { next = maxScroll; vy = -vy * bounceDecay; }
+          window.scrollTo(0, next);
           requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
