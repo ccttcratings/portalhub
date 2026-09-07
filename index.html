@@ -134,8 +134,8 @@
   <script>
     (function() {
       var drag = { active: false, startY: 0, startScroll: 0, history: [], animating: false };
-      var friction = 0.995;
-      var bounceDecay = 0.7;
+      var friction = 0.999;
+      var bounceDecay = 1.0;
 
       document.addEventListener('touchstart', function(e) {
         if (e.touches.length !== 1) return;
@@ -164,7 +164,7 @@
         var dt = last.t - first.t;
         if (dt <= 0) return;
         var velocity = (first.y - last.y) / dt;
-        if (Math.abs(velocity) < 0.5) return;
+        if (Math.abs(velocity) < 0.3) return;
         startScrollMomentum(velocity);
       }, { passive: true });
 
@@ -178,10 +178,10 @@
           var elapsed = now - lastTime;
           lastTime = now;
           vy *= Math.pow(friction, elapsed / 16);
-          if (Math.abs(vy) < 0.5) {
+          if (Math.abs(vy) < 0.01) {
             drag.animating = false;
-            var snapped = next < 30 ? 0 : next > maxScroll - 30 ? maxScroll : Math.round(next);
-            window.scrollTo(0, snapped);
+            if (next < 10) window.scrollTo(0, 0);
+            else if (next > maxScroll - 10) window.scrollTo(0, maxScroll);
             return;
           }
           var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
