@@ -17,10 +17,12 @@
 
     /* Core Layout Styles */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: none; }
-    #ptr { position: fixed; top: 0; left: 50%; transform: translateX(-50%) translateY(-60px); width: 40px; height: 40px; border-radius: 50%; border: 3px solid #ccc; border-top-color: #666; transition: none; z-index: 9999; }
-    #ptr.show { transition: transform 0.2s; }
-    #ptr.spin { animation: ptrSpin 0.6s linear infinite; transition: transform 0.2s; }
-    @keyframes ptrSpin { to { transform: translateX(-50%) rotate(360deg); } }
+    #ptr { position: fixed; top: 0; left: 50%; width: 32px; height: 32px; margin-left: -16px; margin-top: -50px; z-index: 9999; pointer-events: none; }
+    #ptr svg { width: 32px; height: 32px; }
+    #ptr circle { fill: none; stroke: #888; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 75; stroke-dashoffset: 75; transition: none; }
+    #ptr.show circle { stroke-dashoffset: 25; transition: stroke-dashoffset 0.2s ease; }
+    #ptr.spin svg { animation: ptrSpin 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    @keyframes ptrSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .card { background: #fce5cd; max-width: 420px; margin: 0 auto; padding: 6px 20px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     h2 { color: #1e293b; margin-bottom: 0; font-size: 25px; white-space: nowrap; }
     p { color: #64748b; font-size: 14px; font-weight: bold; margin: 0 0 30px; white-space: nowrap; }
@@ -100,7 +102,7 @@
 </head>
 <body>
   <div class="card">
-    <div id="ptr"></div>
+    <div id="ptr"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/></svg></div>
     <h2>Portal Hub of Portals</h2>
     <p>Champaign County Table Tennis Club</p>
 
@@ -160,14 +162,16 @@
         if (drag.startScroll <= 0 && dy < 0) {
           drag.ptrActive = true;
           var dist = Math.min(-dy, 120);
-          ptr.style.transform = 'translateX(-50%) translateY(' + (dist - 60) + 'px)';
-          ptr.className = '';
-          if (dist > 60) { ptr.className = 'show'; }
+          var pct = Math.min(dist / 80, 1);
+          ptr.style.marginTop = (dist - 50) + 'px';
+          ptr.style.opacity = pct;
+          ptr.className = pct >= 1 ? 'show' : '';
           return;
         }
         drag.ptrActive = false;
         ptr.className = '';
-        ptr.style.transform = '';
+        ptr.style.marginTop = '';
+        ptr.style.opacity = '';
         window.scrollTo(0, drag.startScroll + dy);
         var now = Date.now();
         drag.history.push({ y: e.touches[0].clientY, t: now });
@@ -182,7 +186,8 @@
             ptr.className = 'spin';
             location.reload();
           } else {
-            ptr.style.transform = '';
+            ptr.style.marginTop = '';
+            ptr.style.opacity = '';
             ptr.className = '';
           }
           return;
