@@ -223,7 +223,7 @@
       document.addEventListener('touchmove', function(e) {
         if (!drag.active || e.touches.length !== 1) return;
         var dy = drag.startY - e.touches[0].clientY;
-        if (drag.startScroll <= 0 && dy < 0) {
+        if (drag.startScroll <= 10 && dy < 0) {
           drag.ptrActive = true;
           var dist = Math.min(-dy, 120);
           var pct = Math.min(dist / 80, 1);
