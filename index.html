@@ -16,7 +16,8 @@
     }
 
     /* Core Layout Styles */
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: pan-y; overscroll-behavior-y: none; }
+    html, body { overscroll-behavior-y: none; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #fce5cd; text-align: center; padding: 8px 24px; margin: 0; touch-action: pan-y; }
     body.scroll-lock { touch-action: none; }
     #ptr { position: fixed; top: 0; left: 50%; width: 64px; height: 64px; margin-left: -32px; margin-top: -68px; z-index: 9999; pointer-events: none; }
     #ptr .bg { fill: #1a1a1a; }
@@ -225,6 +226,7 @@
         var dy = drag.startY - e.touches[0].clientY;
         if (drag.startScroll <= 10 && dy < 0) {
           drag.ptrActive = true;
+          e.preventDefault();
           var dist = Math.min(-dy, 120);
           var pct = Math.min(dist / 80, 1);
           ptr.style.marginTop = (dist - 60) + 'px';
